@@ -5854,7 +5854,7 @@ static int qpnp_start_charging(struct qpnp_chg_chip *chip)
 	}
 	if (qpnp_charger_type_get(chip) == POWER_SUPPLY_TYPE_USB_DCP)
 	{
-		charge_info_level = 2000;
+		charge_info_level = 1800;
 	}
 	else if (qpnp_charger_type_get(chip) == POWER_SUPPLY_TYPE_USB)
 	{

@@ -730,7 +730,6 @@ static int32_t msm_cci_init(struct v4l2_subdev *sd,
 	rc = msm_camera_request_gpio_table(cci_dev->cci_gpio_tbl,
 		cci_dev->cci_gpio_tbl_size, 1);
 	if (rc < 0) {
-		cci_dev->ref_count--;
 		CDBG("%s: request gpio failed\n", __func__);
 		goto request_gpio_failed;
 	}
@@ -738,7 +737,6 @@ static int32_t msm_cci_init(struct v4l2_subdev *sd,
 	rc = msm_cam_clk_enable(&cci_dev->pdev->dev, cci_clk_info,
 		cci_dev->cci_clk, ARRAY_SIZE(cci_clk_info), 1);
 	if (rc < 0) {
-		cci_dev->ref_count--;
 		CDBG("%s: clk enable failed\n", __func__);
 		goto clk_enable_failed;
 	}
@@ -779,7 +777,7 @@ clk_enable_failed:
 request_gpio_failed:
 	cci_dev->ref_count--;
 #ifdef CONFIG_MACH_MSM8974_14001
-        CONFIG_MACH_MSM8974_14001wake_unlock(&cci_dev->cci_wakelock);
+	wake_unlock(&cci_dev->cci_wakelock);
 #endif
 	return rc;
 }
@@ -793,7 +791,7 @@ static int32_t msm_cci_release(struct v4l2_subdev *sd)
 		pr_err("%s invalid ref count %d / cci state %d\n",
 			__func__, cci_dev->ref_count, cci_dev->cci_state);
 #ifdef CONFIG_MACH_MSM8974_14001
-                ifdefwake_unlock(&cci_dev->cci_wakelock);
+		wake_unlock(&cci_dev->cci_wakelock);
 #endif
 		return -EINVAL;
 	}

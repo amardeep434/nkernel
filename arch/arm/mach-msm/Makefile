@@ -432,3 +432,5 @@ obj-$(CONFIG_ALUCARD_HOTPLUG) += alucard_hotplug.o
 obj-$(CONFIG_THUNDERPLUG_CONTROL) += thunderplug.o
 obj-$(CONFIG_BLU_PLUG) += blu_plug.o
 obj-$(CONFIG_AUTOSMP) += autosmp.o
+
+obj-$(CONFIG_OEM_PROJECT_INFO) += project_info.o
